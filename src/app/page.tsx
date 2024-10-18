@@ -11,9 +11,15 @@ export default function Home() {
   const [results, setResults] = useState([])
 
   const handleSearch = async () => {
-    const response = await fetch(`https://api.sneakersapi.dev/search?query=${encodeURIComponent(query)}&page=1`)
+    const response = await fetch(`https://api.sneakersapi.dev/search?query=${encodeURIComponent(query)}`)
     const data = await response.json()
     setResults(data.hits)
+  }
+//@ts-ignore
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch()
+    }
   }
 
   return (
@@ -25,6 +31,7 @@ export default function Home() {
           placeholder="Enter shoe name"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleKeyDown} 
         />
         <Button onClick={handleSearch}>Search</Button>
       </div>
